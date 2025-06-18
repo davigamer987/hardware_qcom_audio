@@ -1,0 +1,31 @@
+cc_library_shared {
+    name: "libOmxAacEnc",
+    vendor: true,
+
+    srcs: [
+        "src/aenc_svr.c",
+        "src/omx_aac_aenc.cpp",
+    ],
+
+    header_libs: [
+        "media_headers",
+        "generated_kernel_headers",
+    ],
+
+    local_include_dirs: [
+        "inc",
+    ],
+
+    cflags: [
+        "-Wno-format",
+        "-Wno-sign-compare",
+        "-Wno-sign-conversion",
+        "-Wno-self-assign",
+        "-Wno-parentheses-equality",
+    ],
+
+    shared_libs: [
+        "libutils",
+        "liblog",
+    ],
+}

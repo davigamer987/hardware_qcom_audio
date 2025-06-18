@@ -1,0 +1,26 @@
+cc_binary {
+    name: "audiod",
+    vendor: true,
+    srcs: [
+        "audiod_main.cpp",
+        "AudioDaemon.cpp",
+    ],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libtinyalsa",
+        "libaudioroute",
+        "libhardware",
+    ],
+    include_dirs: [
+        "system/media/audio_effects/include",
+        "hardware/libhardware/include",
+        "system/media/audio_utils/include",
+        "external/tinyalsa/include",
+        "system/media/audio_route/include",
+    ],
+    header_libs: [
+        "libsystem_headers",
+        "libhardware_headers",
+    ],
+}

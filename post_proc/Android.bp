@@ -1,0 +1,64 @@
+cc_library_shared {
+    name: "libqcompostprocbundle",
+    relative_install_path: "soundfx",
+    vendor: true,
+    srcs: [
+        "bundle.c",
+        "equalizer.c",
+        "bass_boost.c",
+        "virtualizer.c",
+        "reverb.c",
+        "effect_api.c",
+        "effect_util.c",
+        "hw_accelerator.c",
+    ],
+    cflags: [
+        "-O2",
+        "-fvisibility=hidden",
+        "-Wno-sign-compare",
+        "-Wno-unused-variable",
+        "-Wno-unused-label",
+        "-Wno-format",
+        "-DAFE_PROXY_ENABLED",
+        "-DHW_ACCELERATED_EFFECTS",
+        "-DDTS_EAGLE",
+    ],
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libtinyalsa",
+    ],
+    include_dirs: [
+        "external/tinyalsa/include",
+        "hardware/libhardware/include",
+        "system/media/audio_effects/include",
+    ],
+    header_libs: [
+        "generated_kernel_headers",
+        "libsystem_headers",
+        "libaudio_system_headers",
+        "libeffects_headers",
+    ],
+}
+
+cc_library_static {
+    name: "libhwacceffectswrapper",
+    vendor: true,
+    srcs: ["EffectsHwAcc.cpp"],
+    cflags: [
+        "-O2",
+        "-fvisibility=hidden",
+        "-Wno-sign-compare",
+        "-Wno-unused-variable",
+        "-Wno-unused-label",
+        "-Wno-format",
+        "-DHW_ACC_HPX",
+    ],
+    shared_libs: [
+        "liblog",
+        "libeffects",
+    ],
+    include_dirs: [
+        "system/media/audio_effects/include",
+    ],
+}

@@ -1,0 +1,22 @@
+cc_library_shared {
+    name: "libqcomvisualizer",
+    relative_install_path: "soundfx",
+    vendor: true,
+    srcs: ["offload_visualizer.c"],
+    cflags: [
+        "-fvisibility=hidden",
+        "-Wno-unused-variable",
+    ],
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libdl",
+        "libtinyalsa",
+    ],
+    header_libs: ["libsystem_headers", "libaudio_system_headers"],
+    include_dirs: [
+        "external/tinyalsa/include",
+        "hardware/libhardware/include",
+        "system/media/audio_effects/include",
+    ],
+}

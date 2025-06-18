@@ -1,0 +1,20 @@
+cc_library_shared {
+    name: "libqcomvoiceprocessing",
+    relative_install_path: "soundfx",
+    vendor: true,
+    srcs: ["voice_processing.c"],
+    cflags: [
+        "-fvisibility=hidden",
+        "-Wno-unused-variable",
+        "-Wno-unused-function",
+    ],
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libhardware",
+        "libdl",
+    ],
+    include_dirs: [
+        "system/media/audio_effects/include",
+    ],
+}

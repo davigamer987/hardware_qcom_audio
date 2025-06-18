@@ -30,6 +30,7 @@
 
 #define MIXER_CARD 0
 #define SOUND_CARD 0
+#define EFFECT_CMD_HW_ACC 21
 
 extern const struct effect_interface_s effect_interface;
 

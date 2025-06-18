@@ -1,0 +1,157 @@
+cc_library_shared {
+    name: "audio.primary.msm8994",
+    relative_install_path: "hw",
+    vendor: true,
+
+    defaults: [
+        "qtiaudio_defaults",
+    ],
+    owner: "qti",
+
+    header_libs: [
+        "libhardware_headers",
+        "generated_kernel_headers",
+    ],
+
+    srcs: [
+        "audio_hw.c",
+        "voice.c",
+        "platform_info.c",
+        "msm8974/platform.c",
+        "audio_extn/audio_extn.c",
+        "audio_extn/utils.c",
+        "edid.c",
+        "msm8974/hw_info.c",
+    ],
+
+    cflags: [
+        "-Werror",
+        "-D_GNU_SOURCE",
+        "-DHW_VARIANTS_ENABLED",
+        "-DPLATFORM_MSM8994",
+    ],
+
+    local_include_dirs: [
+        "msm8974",
+        "audio_extn",
+        "voice_extn",
+    ],
+
+    include_dirs: [
+        "external/tinyalsa/include",
+        "external/tinycompress/include",
+        "external/expat/lib",
+        "system/media/audio_route/include",
+        "system/media/audio_utils/include",
+        "system/media/audio_effects/include",
+        "hardware/qcom-caf/msm8994/audio/hal",
+        "hardware/qcom-caf/msm8994/audio/hal/msm8974",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libhardware",
+        "libtinyalsa",
+        "libtinycompress",
+        "libaudioroute",
+        "libdl",
+        "libexpat",
+        "libprocessgroup",
+    ],
+}
+
+soong_config_module_type {
+    name: "qtiaudio_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "qtiaudio",
+    bool_variables: [
+        "feature_fm_power_opt",
+        "feature_usbaudio",
+        "feature_hfp",
+        "feature_ssr",
+        "feature_multi_voice_sessions",
+        "feature_compress_voip",
+        "feature_spkr_protection",
+        "feature_dts_eagle",
+        "feature_dolby_ddp",
+        "feature_dolby_dap",
+        "feature_dev_arbi",
+        "feature_listen",
+        "feature_sound_trigger",
+    ],
+    properties: [
+        "cflags",
+        "srcs",
+    ],
+}
+
+qtiaudio_cc_defaults {
+    name: "qtiaudio_defaults",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-DUSE_VENDOR_EXTN",
+    ],
+    shared_libs: [
+        "liblog",
+        "libcutils",
+    ],
+
+    soong_config_variables: {
+        feature_fm_power_opt: {
+            cflags: ["-DFM_POWER_OPT"],
+            srcs: ["audio_extn/fm.c"],
+        },
+        feature_usbaudio: {
+            cflags: ["-DUSB_HEADSET_ENABLED"],
+            srcs: ["audio_extn/usb.c"],
+        },
+        feature_hfp: {
+            cflags: ["-DHFP_ENABLED"],
+            srcs: ["audio_extn/hfp.c"],
+        },
+        feature_ssr: {
+            cflags: ["-DSSR_ENABLED"],
+            srcs: ["audio_extn/ssr.c"],
+        },
+        feature_multi_voice_sessions: {
+            cflags: ["-DMULTI_VOICE_SESSION_ENABLED"],
+            srcs: ["voice_extn/voice_extn.c"],
+        },
+        feature_compress_voip: {
+            cflags: ["-DCOMPRESS_VOIP_ENABLED"],
+            srcs: ["voice_extn/compress_voip.c"],
+        },
+        feature_spkr_protection: {
+            cflags: ["-DSPKR_PROT_ENABLED"],
+            srcs: ["audio_extn/spkr_protection.c"],
+        },
+        feature_dts_eagle: {
+            cflags: ["-DDTS_EAGLE"],
+            srcs: ["audio_extn/dts_eagle.c"],
+        },
+        feature_dolby_ddp: {
+            cflags: ["-DDS1_DOLBY_DDP_ENABLED"],
+            srcs: ["audio_extn/dolby.c"],
+        },
+        feature_dolby_dap: {
+            cflags: ["-DDS1_DOLBY_DAP_ENABLED"],
+        },
+        feature_dev_arbi: {
+            cflags: ["-DDEV_ARBI_ENABLED"],
+            srcs: ["audio_extn/dev_arbi.c"],
+        },
+        feature_listen: {
+            cflags: ["-DAUDIO_LISTEN_ENABLED"],
+            srcs: ["audio_extn/listen.c"],
+        },
+        feature_sound_trigger: {
+            cflags: [
+                "-DSOUND_TRIGGER_ENABLED",
+                "-DSOUND_TRIGGER_PLATFORM_NAME=msm8994",
+            ],
+            srcs: ["audio_extn/soundtrigger.c"],
+        },
+    },
+}
